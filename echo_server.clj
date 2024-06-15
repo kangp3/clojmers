@@ -1,8 +1,14 @@
 (ns echo-server
-  (:require [maelstrom :as msnode]))
+  (:require [maelstrom :as ms]))
+
+(defn add-handlers!
+  []
+  (ms/add-handler!
+    :echo
+    (fn [req]
+      (ms/reply! req (assoc (:body req) :type "echo_ok")))))
 
 (defn -main
   []
-  (println "Yayyyyyyyyyyyyyyyyyyyyyyyyyy")
-  (msnode/add-handler! :echo (fn [body] (println body)))
-  (msnode/start!))
+  (add-handlers!)
+  (ms/start!))
